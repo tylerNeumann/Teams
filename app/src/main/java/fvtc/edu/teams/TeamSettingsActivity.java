@@ -16,6 +16,9 @@ public class TeamSettingsActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_team_settings);
 
+        Navbar.initListButton(this);
+        Navbar.initMapButton(this);
+        Navbar.initSettingsButton(this);
         this.setTitle(getString(R.string.team_settings));
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

@@ -16,6 +16,9 @@ public class TeamMapActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_team_map);
 
+        Navbar.initListButton(this);
+        Navbar.initMapButton(this);
+        Navbar.initSettingsButton(this);
         this.setTitle(getString(R.string.team_map));
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
