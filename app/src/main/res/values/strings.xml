@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Teams</string>
+    <string name="show_a_list_of_teams">show a list of teams</string>
+    <string name="show_the_map_page">show the map page</string>
+    <string name="show_the_settings_page">show the settings page</string>
+    <string name="team_image">Team image</string>
+    <string name="is_favorite">Is Favorite</string>
+    <string name="rate">rate</string>
+    <string name="rating">rating</string>
+    <string name="cell_phone">cell_phone</string>
+    <string name="enter_city">enter_city</string>
+    <string name="city">city</string>
+    <string name="enter_name">enter_name</string>
+    <string name="name">name</string>
+    <string name="save">save</string>
+    <string name="off">OFF</string>
+    <string name="save_rating">Save Rating</string>
+    <string name="delete">Delete</string>
+    <string name="_100">100%</string>
+    <string name="newText">New</string>
+    <string name="teams_list">Teams List</string>
+    <string name="team_settings">Team Settings</string>
+    <string name="team_edit">Team Edit</string>
+    <string name="team_map">Team Map</string>
 </resources>
