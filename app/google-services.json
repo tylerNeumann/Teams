@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1060418962479",
+    "project_id": "tnteams",
+    "storage_bucket": "tnteams.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060418962479:android:4cb35b32aac23ca2b032da",
+        "android_client_info": {
+          "package_name": "edu.fvtc.TNteams"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0qEw8iC5U1xlDxSD9txatIpuq4pJzPog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060418962479:android:cee8e4d7044cc90fb032da",
+        "android_client_info": {
+          "package_name": "fvtc.edu.teams"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0qEw8iC5U1xlDxSD9txatIpuq4pJzPog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
