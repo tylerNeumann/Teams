@@ -1,13 +1,16 @@
 package fvtc.edu.teams;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -17,8 +20,21 @@ public class TeamListActivity extends AppCompatActivity {
     ArrayList<Team> teams;
 
     RecyclerView teamList;
-    //TeamAdapter teamAdapter;
+    TeamsAdapter teamAdapter;
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) v.getTag();
+            int position = viewHolder.getAdapterPosition();
+            Team team = teams.get(position);
+            Log.d(TAG, "onClick: " + team.getName());
 
+            Intent intent = new Intent(TeamListActivity.this, TeamEditActivity.class);
+            intent.putExtra("teamId", team.getId());
+            Log.d(TAG, "onClick: teamID" + team.getId());
+            startActivity(intent);
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,5 +69,19 @@ public class TeamListActivity extends AppCompatActivity {
         //FileIO.writeFile(FILENAME, this, createDataArray(teams));
        // teams = readTeams(this);
         Log.d(TAG, "createTeams: end: " + teams.size());
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d(TAG, "onResume: Start");
+        
+        teamList = findViewById(R.id.rvTeams);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        teamList.setLayoutManager(layoutManager);
+        teamAdapter = new TeamsAdapter(teams, this);
+        teamAdapter.setOnItemClickListener(onClickListener);
+        teamList.setAdapter(teamAdapter);
+
+        Log.d(TAG, "onResume: End");
     }
 }

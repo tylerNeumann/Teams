@@ -18,7 +18,7 @@
         android:id="@+id/toolbar">
 
         <!--        @color/toolbar_background-->
-        <!--<ToggleButton
+        <ToggleButton
             android:id="@+id/toggleButtonEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="16dp"
             android:layout_weight="1"
-            android:text="@string/save"/>-->
+            android:text="@string/save"/>
     </LinearLayout>
     <ScrollView
         android:id="@+id/scrollView"

@@ -9,14 +9,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class TeamEditActivity extends AppCompatActivity {
-
+int teamId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_team_edit);
 
-        this.setTitle(getString(R.string.team_edit));
+        Bundle extras = getIntent().getExtras();
+        teamId = extras.getInt("teamId");
+        this.setTitle("Team: " + teamId);
+
+        Navbar.initListButton(this);
+        Navbar.initMapButton(this);
+        Navbar.initSettingsButton(this);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

@@ -1,7 +1,6 @@
 package fvtc.edu.teams;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class TeamsAdapter {
+public class TeamsAdapter extends RecyclerView.Adapter{
     private ArrayList<Team> teamData;
     private View.OnClickListener onItemClickListener;
     public static final String TAG = "TeamAdapter";
@@ -45,7 +44,7 @@ public class TeamsAdapter {
         }
 
         public TextView getTvName() { return tvName; }
-        public TextView gettvCity() { return tvCity; }
+        public TextView getTvCity() { return tvCity; }
         public CheckBox getChkFavorite(){ return chkFavorite; }
         public  Button getBtnDelete(){ return btnDelete; }
         public ImageButton getImageButtonPhoto() { return imgPhoto; }
@@ -61,7 +60,6 @@ public class TeamsAdapter {
         Log.d(TAG, "setOnItemClickListener: ");
         onItemClickListener = itemClickListener;
     }
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -77,30 +75,32 @@ public class TeamsAdapter {
 
         TeamViewHolder teamViewHolder = (TeamViewHolder) holder;
         teamViewHolder.getTvName().setText(team.getName());
-        teamViewHolder.gettvCity().setText(team.getCity());
+        teamViewHolder.getTvCity().setText(team.getCity());
+        teamViewHolder.getImageButtonPhoto().setImageResource(team.getImgId());
+        teamViewHolder.getChkFavorite().setChecked(team.getIsFavorite());
 
-        Bitmap teamPhoto = team.getPicture();
+        /*Bitmap teamPhoto = team.getPicture();
         if(teamPhoto != null){
             teamViewHolder.getImageButtonPhoto().setImageBitmap(teamPhoto);
         }
         else {
             teamViewHolder.getImageButtonPhoto().setImageResource(R.drawable.photoicon);
-        }
+        }*/
 
-        teamViewHolder.getBtnDelete().setOnClickListener(new View.OnClickListener() {
+        /*teamViewHolder.getBtnDelete().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: delete");
                 deleteItem(position);
             }
-        });
+        });*/
     }
 
     @Override
     public int getItemCount() { return teamData.size(); }
 
-    private void deleteItem(int position){
+    /*private void deleteItem(int position){
         teamData.remove(position);
         //notifyDataSetChanged();
-    }
+    }*/
 }
