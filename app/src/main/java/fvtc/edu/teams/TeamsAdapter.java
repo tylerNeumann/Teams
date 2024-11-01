@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 public class TeamsAdapter extends RecyclerView.Adapter{
     private ArrayList<Team> teamData;
     private View.OnClickListener onItemClickListener;
+    private CompoundButton.OnCheckedChangeListener onItemCheckedChangeListener;
+    private  boolean isDeleteing;
     public static final String TAG = "TeamAdapter";
 
     private Context parentContext;
@@ -41,12 +44,13 @@ public class TeamsAdapter extends RecyclerView.Adapter{
 
             itemView.setTag(this);
             itemView.setOnClickListener(onItemClickListener);
+            chkFavorite.setOnCheckedChangeListener(onItemCheckedChangeListener);
         }
 
         public TextView getTvName() { return tvName; }
         public TextView getTvCity() { return tvCity; }
-        public CheckBox getChkFavorite(){ return chkFavorite; }
-        public  Button getBtnDelete(){ return btnDelete; }
+        public CheckBox getChkFavorite() { return chkFavorite; }
+        public  Button getBtnDelete() { return btnDelete; }
         public ImageButton getImageButtonPhoto() { return imgPhoto; }
     }
 
@@ -60,6 +64,10 @@ public class TeamsAdapter extends RecyclerView.Adapter{
         Log.d(TAG, "setOnItemClickListener: ");
         onItemClickListener = itemClickListener;
     }
+    public void setOnItemCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener){
+        Log.d(TAG, "setOnItemCheckedChangeListener: ");
+        onItemCheckedChangeListener = listener;
+    }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -71,14 +79,22 @@ public class TeamsAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: " + teamData.get(position));
 
-        Team team = teamData.get(position);
-
         TeamViewHolder teamViewHolder = (TeamViewHolder) holder;
-        teamViewHolder.getTvName().setText(team.getName());
-        teamViewHolder.getTvCity().setText(team.getCity());
-        teamViewHolder.getImageButtonPhoto().setImageResource(team.getImgId());
-        teamViewHolder.getChkFavorite().setChecked(team.getIsFavorite());
+        teamViewHolder.getTvName().setText(teamData.get(position).getName());
+        teamViewHolder.getTvCity().setText(teamData.get(position).getCity());
+        teamViewHolder.getImageButtonPhoto().setImageResource(teamData.get(position).getImgId());
+        teamViewHolder.getChkFavorite().setChecked(teamData.get(position).getIsFavorite());
+        if(isDeleteing) teamViewHolder.btnDelete.setVisibility(View.VISIBLE);
+        else teamViewHolder.btnDelete.setVisibility(View.INVISIBLE);
 
+        //add a click listener for the btnDelete
+        teamViewHolder.getBtnDelete().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: delete");
+                deleteItem(position);
+            }
+        });
         /*Bitmap teamPhoto = team.getPicture();
         if(teamPhoto != null){
             teamViewHolder.getImageButtonPhoto().setImageBitmap(teamPhoto);
@@ -98,9 +114,11 @@ public class TeamsAdapter extends RecyclerView.Adapter{
 
     @Override
     public int getItemCount() { return teamData.size(); }
-
-    /*private void deleteItem(int position){
+    public void setDelete(boolean b) {
+        isDeleteing = b;
+    }
+    private void deleteItem(int position){
         teamData.remove(position);
-        //notifyDataSetChanged();
-    }*/
+        notifyDataSetChanged();
+    }
 }

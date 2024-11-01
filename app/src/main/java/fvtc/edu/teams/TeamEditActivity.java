@@ -1,5 +1,6 @@
 package fvtc.edu.teams;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -35,10 +36,13 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
         Bundle extras = getIntent().getExtras();
         teamId = extras.getInt("teamId");
         this.setTitle("Team: " + teamId);
-
-        if (teamId != 0) {
-            //get the team
-            initTeams(teamId);
+        teams = TeamListActivity.readTeams(this);
+        if(teams.size() != 4){
+            if (teamId != 0) {
+                //get the team
+                initTeams(teamId);
+            }
+            else team = new Team();
         }
         else team = new Team();
 
@@ -53,10 +57,9 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
         initTextChanged(R.id.etCity);
         initTextChanged(R.id.editCell);
 
-        teams = TeamListActivity.readTeams(this);
 
+        Log.i(TAG, "onCreate: " + teamId);
         SetForEditing(false);
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -154,15 +157,18 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
             @Override
             public void onClick(View v) {
                 if(teamId == -1){
-                    Log.d(TAG, "onClick: " + team.toString());
+                    //Log.d(TAG, "onClick: " + team.toString());
                     team.setId(teams.get(teams.size() -1).getId() + 1);
+                    //Log.i(TAG, "onClick: " + teams.size());
                     teams.add(team);
                 } else {
                     teams.set(teamId - 1, team);
+                    Log.d(TAG, "onClick: hit error");
                 }
                 FileIO.writeFile(TeamListActivity.FILENAME,
                         TeamEditActivity.this,
                         TeamListActivity.createDataArray(teams));
+                startActivity(new Intent(TeamEditActivity.this, TeamListActivity.class));
             }
         });
     }

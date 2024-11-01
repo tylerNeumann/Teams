@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -36,6 +39,25 @@ public class TeamListActivity extends AppCompatActivity {
             startActivity(intent);
         }
     };
+    private CompoundButton.OnCheckedChangeListener onCheckedChangedListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            Log.d(TAG, "onCheckedChanged: " + isChecked);
+            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) buttonView.getTag();
+            //not actually being set
+            Log.d(TAG, "onCheckedChanged: " + buttonView.getTag());
+            Log.d(TAG, "onCheckedChanged: made viewHolder");
+            Log.d(TAG, "onCheckedChanged: " + viewHolder);
+            int position = viewHolder.getAdapterPosition();
+            Log.d(TAG, "onCheckedChanged: set position");
+            teams.get(position).setIsFavorite(isChecked);
+
+
+            FileIO.writeFile(TeamListActivity.FILENAME,
+                    TeamListActivity.this,
+                    createDataArray(teams));
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +75,10 @@ public class TeamListActivity extends AppCompatActivity {
 
         this.setTitle(getString(R.string.teams_list));
 
+        initDeleteSwitch();
+        initAddTeamButton();
+        RebindTeams();
+        Log.i(TAG, "onCreate: teams size " + teams.size());
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -115,5 +141,39 @@ public class TeamListActivity extends AppCompatActivity {
             ));
         }
         return teams1;
+    }
+    private void initDeleteSwitch() {
+        SwitchCompat switchDelete = findViewById(R.id.switchDelete);
+        switchDelete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.d(TAG, "onCheckedChanged: "+isChecked);
+                teamAdapter.setDelete(isChecked);
+                teamAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void initAddTeamButton() {
+        Button btnAddTeam = findViewById(R.id.btnAddTeam);
+        btnAddTeam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TeamListActivity.this, TeamEditActivity.class);
+                intent.putExtra("teamId", -1);
+                Log.d(TAG, "onClick: hit add item");
+                startActivity(intent);
+            }
+        });
+    }
+    private void RebindTeams() {
+        // rebind the recycler view
+        teamList = findViewById(R.id.rvTeams);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        teamList.setLayoutManager(layoutManager);
+        teamAdapter = new TeamsAdapter(teams, this);
+        teamAdapter.setOnItemClickListener(onClickListener);
+        teamAdapter.setOnItemCheckedChangeListener(onCheckedChangedListener);
+        teamList.setAdapter(teamAdapter);
     }
 }

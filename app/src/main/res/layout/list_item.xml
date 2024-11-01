@@ -12,6 +12,7 @@
         android:text="@string/delete"
         android:visibility="invisible"
         android:textColor="@color/white"
+        android:background="@color/purple"
         android:layout_marginEnd="@dimen/_5dp"
         app:layout_constraintEnd_toStartOf="@+id/imgPhoto"
         app:layout_constraintTop_toTopOf="@id/imgPhoto"
