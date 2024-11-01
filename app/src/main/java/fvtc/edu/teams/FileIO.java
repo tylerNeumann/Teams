@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class FileIO {
     public static final String TAG = "FileIO";
-    public ArrayList<String> readFile(String filename, AppCompatActivity activity){
+    public static ArrayList<String> readFile(String filename, AppCompatActivity activity){
         Log.d(TAG, "readFile: start");
         ArrayList<String> items = new ArrayList<String>();
         try{
@@ -43,7 +43,7 @@ public class FileIO {
         Log.d(TAG, "readFile: " + items);
         return items;
     }
-    public void writeFile(String filename, AppCompatActivity activity, String[] items) /*throws FileNotFoundException if not in try catch block*/ {
+    public static void writeFile(String filename, AppCompatActivity activity, String[] items) /*throws FileNotFoundException if not in try catch block*/ {
         try {
             OutputStreamWriter writer = new OutputStreamWriter(activity.openFileOutput(filename, Context.MODE_PRIVATE));
             Log.d(TAG, "writeFile: " + filename);
@@ -53,9 +53,8 @@ public class FileIO {
                 if(counter < items.length - 1) {line += "\n";}
                 writer.write(line);
                 Log.d(TAG, "writeFile: " + line);
-                writer.close();
             }
-
+            writer.close();
         } catch (FileNotFoundException e) {
             Log.d(TAG, "WriteFile: FileNotFoundException" + e.getMessage());
         } catch (IOException e) {

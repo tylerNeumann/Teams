@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class TeamListActivity extends AppCompatActivity {
     public static final String TAG = "TeamsListActivity";
+    public static final String FILENAME =  "teams.txt";
     ArrayList<Team> teams;
 
     RecyclerView teamList;
@@ -42,6 +43,8 @@ public class TeamListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_team_list);
 
         teams = new ArrayList<Team>();
+
+        teams = readTeams(this);
         if(teams.size() == 0) createTeams();
 
         Navbar.initListButton(this);
@@ -66,8 +69,8 @@ public class TeamListActivity extends AppCompatActivity {
         teams.add(new Team(3,"Vikings","Minneapolis","9203331234", 3, R.drawable.vikings, false, 0.0, 0.0));
         teams.add(new Team(4,"Bears","Chicago","9202221234", 4, R.drawable.bears, false, 0.0, 0.0));
 
-        //FileIO.writeFile(FILENAME, this, createDataArray(teams));
-       // teams = readTeams(this);
+        FileIO.writeFile(FILENAME, this, createDataArray(teams));
+        teams = readTeams(this);
         Log.d(TAG, "createTeams: end: " + teams.size());
     }
     @Override
@@ -83,5 +86,34 @@ public class TeamListActivity extends AppCompatActivity {
         teamList.setAdapter(teamAdapter);
 
         Log.d(TAG, "onResume: End");
+    }
+    public static String[] createDataArray(ArrayList<Team> teams){
+        String[] teamData = new String[teams.size()];
+        for(int count = 0; count < teams.size(); count ++){
+            teamData[count] = teams.get(count).toString();
+        }
+        Log.i(TAG, "createDataArray: " + teamData);
+        return teamData;
+    }
+    public static ArrayList<Team> readTeams(AppCompatActivity activity) {
+        ArrayList<String> strData = FileIO.readFile(FILENAME, activity);
+        ArrayList<Team>  teams1 = new ArrayList<Team>();
+
+        for (String s : strData){
+            Log.d(TAG, "readTeams: " + s);
+            String[] data = s.split("\\|");
+            teams1.add(new Team(
+                    Integer.parseInt(data[0]),
+                    data[1],
+                    data[2],
+                    data[3],
+                    Float.parseFloat(data[4]),
+                    Integer.parseInt(data[5]),
+                    Boolean.parseBoolean(data[6]),
+                    Double.parseDouble(data[7]),
+                    Double.parseDouble(data[8])
+            ));
+        }
+        return teams1;
     }
 }

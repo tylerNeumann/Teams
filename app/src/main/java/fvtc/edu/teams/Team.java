@@ -17,17 +17,27 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return  "id=" + String.valueOf(id) +
-                "| name='" + name + '\'' +
-                "| city='" + city + '\'' +
-                "| cellPhone='" + cellPhone + '\'' +
-                "| rating=" + rating +
-                "| imgId=" + imgId +
-                "| isFavorite=" + isFavorite +
-                "| latitude=" + latitude +
-                "| longitude=" + longitude;
+        return  String.valueOf(id) +
+                "|" + name + '\'' +
+                "|" + city + '\'' +
+                "|'" + cellPhone + '\'' +
+                "|" + rating +
+                "|" + imgId +
+                "|" + isFavorite +
+                "|" + latitude +
+                "|" + longitude;
     }
-
+    public Team() {
+        this.id = -1;
+        this.name = "";
+        this.city = "";
+        this.cellPhone = "";
+        this.rating = 0.0f;
+        this.imgId = 0;
+        this.isFavorite = false;
+        this.latitude = 0.0;
+        this.longitude = 0.0;
+    }
     public Team(int id,
                 String name,
                 String city,
@@ -117,5 +127,14 @@ public class Team implements Serializable {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+    public void setControlText(int controlId, String value){
+        if(controlId == R.id.etName){
+            this.setName(value);
+        }else if (controlId == R.id.etCity) {
+            this.setCity(value);
+        }else{
+            this.setCellPhone(value);
+        }
     }
 }
