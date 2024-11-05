@@ -157,9 +157,9 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
             @Override
             public void onClick(View v) {
                 if(teamId == -1){
-                    //Log.d(TAG, "onClick: " + team.toString());
-                    team.setId(teams.get(teams.size() -1).getId() + 1);
-                    //Log.i(TAG, "onClick: " + teams.size());
+                    Log.d(TAG, "onClick: " + team.toString());
+                    team.setId(teams.size() +1);
+                    team.setImgId(R.drawable.photoicon);
                     teams.add(team);
                 } else {
                     teams.set(teamId - 1, team);
