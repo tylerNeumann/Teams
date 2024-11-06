@@ -91,12 +91,12 @@ public class TeamsDataSource {
         }
         return team;
     }
-    public ArrayList<Team> get(){
+    public ArrayList<Team> get(String sortBy, String sortOrder){
         Log.d(TAG, "get: Start");
         ArrayList<Team> teams = new ArrayList<Team>();
         try{
             Log.i(TAG, "get: inside try block");
-            String sql = "SELECT * from tblTeam";
+            String sql = "SELECT * from tblTeam ORDER BY " + sortBy + " " + sortOrder;
             Cursor cursor = database.rawQuery(sql, null);
             Team team;
             cursor.moveToFirst();

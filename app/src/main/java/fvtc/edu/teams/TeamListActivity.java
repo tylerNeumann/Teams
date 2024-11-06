@@ -109,9 +109,15 @@ public class TeamListActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: end");
     }
     private void initDatabase() {
+        String sortBy = getSharedPreferences("teamspreferences",
+                Context.MODE_PRIVATE)
+                .getString("sortby", "name");
+        String sortOrder = getSharedPreferences("teamspreferences",
+                Context.MODE_PRIVATE)
+                .getString("sortorder", "ASC");
         ds = new TeamsDataSource(this);
         ds.open();
-        teams = ds.get();
+        teams = ds.get(sortBy, sortOrder);
         Log.d(TAG, "initDatabase: Teams: " + teams.size());
     }
     /*private void createTeams() {
