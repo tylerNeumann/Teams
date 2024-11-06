@@ -22,4 +22,8 @@
     <string name="team_settings">Team Settings</string>
     <string name="team_edit">Team Edit</string>
     <string name="team_map">Team Map</string>
+    <string name="descending">descending</string>
+    <string name="ascending">ascending</string>
+    <string name="sort_order">Sort order</string>
+    <string name="sort_by">Sort by</string>
 </resources>

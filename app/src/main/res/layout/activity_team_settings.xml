@@ -8,4 +8,99 @@
     android:layout_height="match_parent"
     tools:context=".TeamSettingsActivity">
     <include layout="@layout/navbar"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/navbar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <TextView
+                android:id="@+id/tvSortBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8dp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:text="@string/sort_by"
+                android:textColor="@color/purple"
+                android:textSize="24sp" />
+            <RadioGroup
+                android:id="@+id/radioGroupSortBy"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_line"
+                app:layout_constraintTop_toBottomOf="@id/tvSortBy"
+                android:layout_marginStart="10dp">
+                <RadioButton
+                    android:id="@+id/radioName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/name"
+                    android:textColor="@color/purple"
+                    android:textSize="@dimen/_24sp" />
+                <RadioButton
+                    android:id="@+id/radioCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_24sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="@color/purple"
+                    android:text="@string/city" />
+                <RadioButton
+                    android:id="@+id/radioIsFavorite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="@dimen/_24sp"
+                    android:textColor="@color/purple"
+                    android:text="@string/is_favorite" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/tvSortOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sort_order"
+                android:layout_marginStart="@dimen/_8dp"
+                android:layout_marginTop="@dimen/_16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/radioGroupSortBy"
+                android:textColor="@color/purple"
+                android:textSize="24sp" />
+            <RadioGroup
+                android:id="@+id/radioGroupSortOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSortOrder"
+                android:background="@drawable/border_line"
+                android:textColor="@color/purple"
+                android:layout_marginStart="10dp">
+                <RadioButton
+                    android:id="@+id/radioAscending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="@dimen/_24sp"
+                    android:textColor="@color/purple"
+                    android:text="@string/ascending" />
+                <RadioButton
+                    android:id="@+id/radioDescending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="@dimen/_24sp"
+                    android:textColor="@color/purple"
+                    android:text="@string/descending" />
+            </RadioGroup>
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/navbar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
