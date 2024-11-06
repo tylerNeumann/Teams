@@ -22,6 +22,7 @@ public class TeamListActivity extends AppCompatActivity {
     public static final String TAG = "TeamsListActivity";
     public static final String FILENAME =  "teams.txt";
     ArrayList<Team> teams;
+    TeamsDataSource ds;
 
     RecyclerView teamList;
     TeamsAdapter teamAdapter;
@@ -51,11 +52,10 @@ public class TeamListActivity extends AppCompatActivity {
             int position = viewHolder.getAdapterPosition();
             Log.d(TAG, "onCheckedChanged: set position");
             teams.get(position).setIsFavorite(isChecked);
-
-
-            FileIO.writeFile(TeamListActivity.FILENAME,
+            ds.update(teams.get(position));
+            /*FileIO.writeFile(TeamListActivity.FILENAME,
                     TeamListActivity.this,
-                    createDataArray(teams));
+                    createDataArray(teams));*/
         }
     };
     @Override
@@ -88,7 +88,7 @@ public class TeamListActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: end");
     }
     private void initDatabase() {
-        TeamsDataSource ds = new TeamsDataSource(this);
+        ds = new TeamsDataSource(this);
         ds.open();
         teams = ds.get();
         Log.d(TAG, "initDatabase: Teams: " + teams.size());
@@ -154,7 +154,7 @@ public class TeamListActivity extends AppCompatActivity {
         switchDelete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d(TAG, "onCheckedChanged: "+isChecked);
+                Log.d(TAG, "onCheckedChanged: " + isChecked);
                 teamAdapter.setDelete(isChecked);
                 teamAdapter.notifyDataSetChanged();
             }

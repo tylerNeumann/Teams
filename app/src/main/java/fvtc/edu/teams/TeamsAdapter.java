@@ -118,6 +118,16 @@ public class TeamsAdapter extends RecyclerView.Adapter{
         isDeleteing = b;
     }
     private void deleteItem(int position){
+        try {
+            Log.d(TAG, "deleteItem: start");
+            Team team = teamData.get(position);
+            TeamsDataSource ds = new TeamsDataSource(parentContext);
+            ds.open();
+            Log.i(TAG, "deleteItem: " + team.getName());
+            boolean didDelete = ds.delete(team) > 0;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         teamData.remove(position);
         notifyDataSetChanged();
     }
