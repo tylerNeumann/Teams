@@ -66,7 +66,7 @@ public class TeamListActivity extends AppCompatActivity {
 
         teams = new ArrayList<Team>();
 
-        teams = readTeams(this);
+        /*teams = readTeams(this);*/
         //if(teams.size() == 0) createTeams();
 
         Navbar.initListButton(this);
@@ -89,8 +89,8 @@ public class TeamListActivity extends AppCompatActivity {
     }
     private void initDatabase() {
         TeamsDataSource ds = new TeamsDataSource(this);
-        ds.open(true);
-        //teams = ds.get();
+        ds.open();
+        teams = ds.get();
         Log.d(TAG, "initDatabase: Teams: " + teams.size());
     }
     private void createTeams() {

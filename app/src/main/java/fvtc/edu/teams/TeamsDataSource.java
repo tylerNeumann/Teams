@@ -15,7 +15,7 @@ public class TeamsDataSource {
     public static final String TAG = "TeamsDataSource";
 
     public TeamsDataSource(Context context){
-        dbHelper = new DatabaseHelper(context, null, null, 1);
+        dbHelper = new DatabaseHelper(context, DatabaseHelper.DATABASE_NAME, null, 1);
     }
     public void open() throws SQLException{
         open(false);
@@ -49,43 +49,122 @@ public class TeamsDataSource {
     }
 
     public Team get(int id){
-        return new Team();
+        Team team = null;
+
+        try{
+            String query = "Select * from tblTeam where id = " + id;
+            Cursor cursor = database.rawQuery(query, null);
+
+            //Cursor cursor = db.query("tblGroceryList",null, null, null, null, null, null);
+
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast())
+            {
+                team.setId(cursor.getInt(0));
+                team.setName(cursor.getString(1));
+                team.setCity(cursor.getString(2));
+                team.setImgId(cursor.getInt(3));
+                Boolean fav = (cursor.getInt(4) == 1);
+                team.setIsFavorite(fav);
+                team.setRating(cursor.getFloat(5));
+                team.setCellPhone(cursor.getString(6));
+                team.setLatitude(cursor.getDouble(7));
+                team.setLongitude(cursor.getDouble(8));
+
+
+                //item.setLatitude(cursor.getDouble(7));
+                //item.setLongitude(cursor.getDouble(8));
+
+                Log.d(TAG, "get: " + team.toString());
+
+                cursor.moveToNext();
+
+            }
+        }
+        catch(Exception e)
+        {
+            Log.d(TAG, "get: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return team;
     }
     public ArrayList<Team> get(){
         Log.d(TAG, "get: Start");
         ArrayList<Team> teams = new ArrayList<Team>();
         try{
+            Log.i(TAG, "get: inside try block");
             String sql = "SELECT * from tblTeam";
             Cursor cursor = database.rawQuery(sql, null);
             Team team;
             cursor.moveToFirst();
             while (!cursor.isAfterLast()){
+                Log.i(TAG, "get: inside cursor");
                 team = new Team();
                 team.setId(cursor.getInt(0));
                 team.setName(cursor.getString(1));
                 team.setCity(cursor.getString(2));
                 team.setImgId(cursor.getInt(3));
-                Boolean fav= cursor.getInt(4) == 1;
+                Boolean fav = (cursor.getInt(4) == 1);
                 team.setIsFavorite(fav);
                 team.setRating(cursor.getFloat(5));
                 team.setCellPhone(cursor.getString(6));
-
-                if(team.getImgId()== 0) team.setImgId(R.drawable.photoicon);
+                team.setLatitude(cursor.getDouble(7));
+                team.setLongitude(cursor.getDouble(8));
+                if(team.getImgId() == 0) team.setImgId(R.drawable.photoicon);
 
                 teams.add(team);
                 Log.d(TAG, "get: " + team.toString());
                 cursor.moveToNext();
             }
         }catch (Exception e){
+            Log.i(TAG, "get: error");
             Log.d(TAG, "get: " + e.getMessage());
             e.printStackTrace();
         }
         return teams;
     }
     public int deleteAll(){
+        Log.d(TAG, "deleteAll: ");
+        try{
+            return database.delete("tblTeam", null, null);
+        }
+        catch(Exception e)
+        {
+            Log.d(TAG, "get: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public int delete(Team team)
+    {
+        Log.d(TAG, "delete: Start item");
+        try{
+            int id = team.getId();
+            if(id < 1)
+                return 0;
+            Log.d(TAG, "delete: " + id);
+            return delete(id);
+        }
+        catch(Exception e)
+        {
+            Log.d(TAG, "Delete: failed: " + e.getMessage());
+            e.printStackTrace();
+        }
         return 0;
     }
     public int delete(int id){
+        try{
+            Log.d(TAG, "delete: Start : " + id);
+            Log.d(TAG, "delete: database " + database.isOpen());
+            int rowsaffected = database.delete("tblTeam", "id = " + id, null);
+            Log.d(TAG, "delete: rowsaffected: " + rowsaffected);
+            return rowsaffected;
+        }
+        catch(Exception e)
+        {
+            Log.d(TAG, "Delete: error" + e.getMessage());
+            e.printStackTrace();
+        }
         return 0;
     }
     public int getNewId(){
