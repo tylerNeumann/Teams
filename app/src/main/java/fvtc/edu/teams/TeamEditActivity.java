@@ -35,16 +35,17 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
 
         Bundle extras = getIntent().getExtras();
         teamId = extras.getInt("teamId");
+        Log.i(TAG, "onCreate: teamId = " + teamId);
         this.setTitle("Team: " + teamId);
-        teams = TeamListActivity.readTeams(this);
-        if(teams.size() != 4){
-            if (teamId != 0) {
+        //teams = TeamListActivity.readTeams(this);
+        //if(teams.size() != 4){
+            if (teamId != -1) {
                 //get the team
                 initTeams(teamId);
             }
             else team = new Team();
-        }
-        else team = new Team();
+        //}
+        //else team = new Team();
 
         Navbar.initListButton(this);
         Navbar.initMapButton(this);
@@ -75,10 +76,19 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
     }
     private void initTeams(int teamId) {
         //get the teams
-        teams = TeamListActivity.readTeams(this);
+        try {
+            TeamsDataSource ds = new TeamsDataSource(this);
+            ds.open();
+            team = ds.get(teamId);
+            ds.close();
+            Log.d(TAG, "initTeams: " + team.toString());
+        }catch (Exception e){
+            Log.d(TAG, "initTeams: " + e.getMessage());
+        }
+        /*teams = TeamListActivity.readTeams(this);
 
         //get the team
-        team = teams.get(teamId-1);
+        team = teams.get(teamId-1);*/
         rebindTeam();
     }
     private void rebindTeam() {
@@ -152,22 +162,21 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
     }
     private void initSaveButton()  {
         Button btnSave = findViewById(R.id.btnSave);
-
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TeamsDataSource ds = new TeamsDataSource(TeamEditActivity.this);
+                ds.open();
                 if(teamId == -1){
                     Log.d(TAG, "onClick: " + team.toString());
-                    team.setId(teams.size() +1);
+                    team.setId(ds.getNewId());
                     team.setImgId(R.drawable.photoicon);
-                    teams.add(team);
+                    ds.insert(team);
                 } else {
-                    teams.set(teamId - 1, team);
-                    Log.d(TAG, "onClick: hit error");
+                    Log.d(TAG, "Updating: " + team.toString());
+                    ds.update(team);
                 }
-                FileIO.writeFile(TeamListActivity.FILENAME,
-                        TeamEditActivity.this,
-                        TeamListActivity.createDataArray(teams));
+                ds.close();
                 startActivity(new Intent(TeamEditActivity.this, TeamListActivity.class));
             }
         });

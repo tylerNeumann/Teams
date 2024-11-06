@@ -15,7 +15,7 @@ public class TeamsDataSource {
     public static final String TAG = "TeamsDataSource";
 
     public TeamsDataSource(Context context){
-        dbHelper = new DatabaseHelper(context, DatabaseHelper.DATABASE_NAME, null, 1);
+        dbHelper = new DatabaseHelper(context, DatabaseHelper.DATABASE_NAME, null, DatabaseHelper.DATABASE_VERSION);
     }
     public void open() throws SQLException{
         open(false);
@@ -26,7 +26,7 @@ public class TeamsDataSource {
         Log.d(TAG, "open: " + database.isOpen());
         if(refresh) refreshData();
     }
-    public  void close(){
+    public void close(){
         dbHelper.close();
     }
 
@@ -52,6 +52,7 @@ public class TeamsDataSource {
         Team team = null;
 
         try{
+            Log.i(TAG, "get by id: start");
             String query = "Select * from tblTeam where id = " + id;
             Cursor cursor = database.rawQuery(query, null);
 
@@ -60,6 +61,8 @@ public class TeamsDataSource {
             cursor.moveToFirst();
             while(!cursor.isAfterLast())
             {
+                team = new Team();
+                Log.d(TAG, "get: cursor start");
                 team.setId(cursor.getInt(0));
                 team.setName(cursor.getString(1));
                 team.setCity(cursor.getString(2));
@@ -71,7 +74,7 @@ public class TeamsDataSource {
                 team.setLatitude(cursor.getDouble(7));
                 team.setLongitude(cursor.getDouble(8));
 
-
+                Log.d(TAG, "get: cursor end");
                 //item.setLatitude(cursor.getDouble(7));
                 //item.setLongitude(cursor.getDouble(8));
 
@@ -135,8 +138,7 @@ public class TeamsDataSource {
         }
         return 0;
     }
-    public int delete(Team team)
-    {
+    public int delete(Team team){
         Log.d(TAG, "delete: Start item");
         try{
             int id = team.getId();
@@ -168,18 +170,18 @@ public class TeamsDataSource {
         return 0;
     }
     public int getNewId(){
-        int newId = -1;
+        int lastId = -1;
         try {
             //get the highest id in table and add 1
             String sql = "SELECT max(id) from tblTeam";
             Cursor cursor = database.rawQuery(sql, null);
             cursor.moveToFirst();
-            newId = cursor.getInt(0) + 1;
+            lastId = cursor.getInt(0) + 1;
             cursor.close();
         }catch (Exception e){
-            return newId;
+            return lastId;
         }
-        return 0;
+        return lastId;
     }
     public int insert(Team team){
 

@@ -28,12 +28,11 @@ public class Team implements Serializable {
                 "|" + longitude;
     }
     public Team() {
-        this.id = -1;
         this.name = "";
         this.city = "";
         this.cellPhone = "";
         this.rating = 0.0f;
-        this.imgId = 0;
+        this.imgId = R.drawable.photoicon;
         this.isFavorite = false;
         this.latitude = 0.0;
         this.longitude = 0.0;

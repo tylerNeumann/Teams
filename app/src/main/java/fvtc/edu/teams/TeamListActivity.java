@@ -93,7 +93,7 @@ public class TeamListActivity extends AppCompatActivity {
         teams = ds.get();
         Log.d(TAG, "initDatabase: Teams: " + teams.size());
     }
-    private void createTeams() {
+    /*private void createTeams() {
         Log.d(TAG, "createTeams: start");
         teams = new ArrayList<Team>();
 
@@ -105,7 +105,7 @@ public class TeamListActivity extends AppCompatActivity {
         FileIO.writeFile(FILENAME, this, createDataArray(teams));
         teams = readTeams(this);
         Log.d(TAG, "createTeams: end: " + teams.size());
-    }
+    }*/
     @Override
     public void onResume(){
         super.onResume();
@@ -128,7 +128,7 @@ public class TeamListActivity extends AppCompatActivity {
         Log.i(TAG, "createDataArray: " + teamData);
         return teamData;
     }
-    public static ArrayList<Team> readTeams(AppCompatActivity activity) {
+    /*public static ArrayList<Team> readTeams(AppCompatActivity activity) {
         ArrayList<String> strData = FileIO.readFile(FILENAME, activity);
         ArrayList<Team>  teams1 = new ArrayList<Team>();
 
@@ -148,7 +148,7 @@ public class TeamListActivity extends AppCompatActivity {
             ));
         }
         return teams1;
-    }
+    }*/
     private void initDeleteSwitch() {
         SwitchCompat switchDelete = findViewById(R.id.switchDelete);
         switchDelete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
