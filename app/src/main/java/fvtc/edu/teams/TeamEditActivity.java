@@ -164,23 +164,36 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
             scrollView.fullScroll(ScrollView.FOCUS_UP);
         }
     }
+
     private void initSaveButton()  {
+        String APIURL = getString(R.string.API_URl) + teamId;
         Button btnSave = findViewById(R.id.btnSave);
+        Log.d(TAG, "initSaveButton: hit");
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TeamsDataSource ds = new TeamsDataSource(TeamEditActivity.this);
-                ds.open();
+                Log.d(TAG, "onClick: hit");
                 if(teamId == -1){
                     Log.d(TAG, "onClick: " + team.toString());
-                    team.setId(ds.getNewId());
+                    RestClient.execPostRequest(team, getString(R.string.API_URl), TeamEditActivity.this,
+                            new VolleyCallback() {
+                                @Override
+                                public void onSuccess(ArrayList<Team> result) {
+                                    team.setId(result.get(0).getId());
+                                    Log.d(TAG, "onSuccess: Post" + team.getId());
+                                }
+                            });
                     team.setImgId(R.drawable.photoicon);
-                    ds.insert(team);
                 } else {
-                    Log.d(TAG, "Updating: " + team.toString());
-                    ds.update(team);
+                    Log.d(TAG, "onClick api url: " + APIURL);
+                    RestClient.execPutRequest(team, APIURL, TeamEditActivity.this, new VolleyCallback() {
+                        @Override
+                        public void onSuccess(ArrayList<Team> result) {
+
+                            Log.d(TAG, "onSuccess: Put" + team.getId());
+                        }
+                    });
                 }
-                ds.close();
                 startActivity(new Intent(TeamEditActivity.this, TeamListActivity.class));
             }
         });
