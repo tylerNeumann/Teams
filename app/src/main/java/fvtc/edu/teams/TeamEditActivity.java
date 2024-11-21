@@ -40,12 +40,9 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
         //teams = TeamListActivity.readTeams(this);
         //if(teams.size() != 4){
             if (teamId != -1) {
-                //get the team
                 initTeams(teamId);
             }
             else team = new Team();
-        //}
-        //else team = new Team();
 
         Navbar.initListButton(this);
         Navbar.initMapButton(this);
@@ -77,18 +74,23 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
     private void initTeams(int teamId) {
         //get the teams
         try {
-            TeamsDataSource ds = new TeamsDataSource(this);
+            /*TeamsDataSource ds = new TeamsDataSource(this);
             ds.open();
             team = ds.get(teamId);
-            ds.close();
+            ds.close();*/
+            RestClient.execGetOneRequest(getString(R.string.API_URl) + teamId,
+                    this,
+                    new VolleyCallback() {
+                        @Override
+                        public void onSuccess(ArrayList<Team> result) {
+                            team = result.get(0);
+                            rebindTeam();
+                        }
+                    });
             Log.d(TAG, "initTeams: " + team.toString());
         }catch (Exception e){
             Log.d(TAG, "initTeams: " + e.getMessage());
         }
-        /*teams = TeamListActivity.readTeams(this);
-
-        //get the team
-        team = teams.get(teamId-1);*/
         rebindTeam();
     }
     private void rebindTeam() {
@@ -97,10 +99,12 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
         EditText editCellPhone = findViewById(R.id.editCell);
         TextView editRating = findViewById(R.id.txtRating);
 
-        editName.setText(team.getName());
-        editCity.setText(team.getCity());
-        editCellPhone.setText(team.getCellPhone());
-        editRating.setText(String.valueOf(team.getRating()));
+        if (team != null) {
+            editName.setText(team.getName());
+            editCity.setText(team.getCity());
+            editCellPhone.setText(team.getCellPhone());
+            editRating.setText(String.valueOf(team.getRating()));
+        }
 
     }
     private void initRatingButton(){

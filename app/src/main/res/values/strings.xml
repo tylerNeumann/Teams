@@ -26,4 +26,6 @@
     <string name="ascending">ascending</string>
     <string name="sort_order">Sort order</string>
     <string name="sort_by">Sort by</string>
+
+    <string name="API_URl">https://fvtcdp.azurewebsites.net/api/Team/</string>
 </resources>

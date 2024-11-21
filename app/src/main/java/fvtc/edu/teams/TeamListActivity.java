@@ -58,9 +58,7 @@ public class TeamListActivity extends AppCompatActivity {
             Log.d(TAG, "onCheckedChanged: set position");
             teams.get(position).setIsFavorite(isChecked);
             ds.update(teams.get(position));
-            /*FileIO.writeFile(TeamListActivity.FILENAME,
-                    TeamListActivity.this,
-                    createDataArray(teams));*/
+
         }
     };
     @Override
@@ -82,7 +80,8 @@ public class TeamListActivity extends AppCompatActivity {
 
         initDeleteSwitch();
         initAddTeamButton();
-        initDatabase();
+        //initDatabase();
+        readFromAPI();
 
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -99,7 +98,6 @@ public class TeamListActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         registerReceiver(broadcastReceiver, filter);
 
-        RebindTeams();
         Log.i(TAG, "onCreate: teams size " + teams.size());
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -107,6 +105,21 @@ public class TeamListActivity extends AppCompatActivity {
             return insets;
         });
         Log.d(TAG, "onCreate: end");
+    }
+    private void readFromAPI(){
+        try {
+            Log.d(TAG, "readFromAPI: start");
+            RestClient.execGetRequest(getString(R.string.API_URl), this, new VolleyCallback() {
+                @Override
+                public void onSuccess(ArrayList<Team> result) {
+                    Log.d(TAG, "onSuccess: got here");
+                    teams = result;
+                    RebindTeams();
+                }
+            });
+        }catch (Exception e){
+            Log.e(TAG, "readFromAPI: Error" + e.getMessage() );
+        }
     }
     private void initDatabase() {
         String sortBy = getSharedPreferences("teamspreferences",
@@ -120,31 +133,11 @@ public class TeamListActivity extends AppCompatActivity {
         teams = ds.get(sortBy, sortOrder);
         Log.d(TAG, "initDatabase: Teams: " + teams.size());
     }
-    /*private void createTeams() {
-        Log.d(TAG, "createTeams: start");
-        teams = new ArrayList<Team>();
-
-        teams.add(new Team(1,"Packers","Green Bay","9205551234", 1, R.drawable.packers, true, 0.0, 0.0));
-        teams.add(new Team(2,"Lions","Detroit","9204441234", 2, R.drawable.lions, false, 0.0, 0.0));
-        teams.add(new Team(3,"Vikings","Minneapolis","9203331234", 3, R.drawable.vikings, false, 0.0, 0.0));
-        teams.add(new Team(4,"Bears","Chicago","9202221234", 4, R.drawable.bears, false, 0.0, 0.0));
-
-        FileIO.writeFile(FILENAME, this, createDataArray(teams));
-        teams = readTeams(this);
-        Log.d(TAG, "createTeams: end: " + teams.size());
-    }*/
     @Override
     public void onResume(){
         super.onResume();
         Log.d(TAG, "onResume: Start");
-        
-        teamList = findViewById(R.id.rvTeams);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        teamList.setLayoutManager(layoutManager);
-        teamAdapter = new TeamsAdapter(teams, this);
-        teamAdapter.setOnItemClickListener(onClickListener);
-        teamList.setAdapter(teamAdapter);
-
+        RebindTeams();
         Log.d(TAG, "onResume: End");
     }
     public static String[] createDataArray(ArrayList<Team> teams){
@@ -155,27 +148,6 @@ public class TeamListActivity extends AppCompatActivity {
         Log.i(TAG, "createDataArray: " + teamData);
         return teamData;
     }
-    /*public static ArrayList<Team> readTeams(AppCompatActivity activity) {
-        ArrayList<String> strData = FileIO.readFile(FILENAME, activity);
-        ArrayList<Team>  teams1 = new ArrayList<Team>();
-
-        for (String s : strData){
-            Log.d(TAG, "readTeams: " + s);
-            String[] data = s.split("\\|");
-            teams1.add(new Team(
-                    Integer.parseInt(data[0]),
-                    data[1],
-                    data[2],
-                    data[3],
-                    Float.parseFloat(data[4]),
-                    Integer.parseInt(data[5]),
-                    Boolean.parseBoolean(data[6]),
-                    Double.parseDouble(data[7]),
-                    Double.parseDouble(data[8])
-            ));
-        }
-        return teams1;
-    }*/
     private void initDeleteSwitch() {
         SwitchCompat switchDelete = findViewById(R.id.switchDelete);
         switchDelete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -187,7 +159,6 @@ public class TeamListActivity extends AppCompatActivity {
             }
         });
     }
-
     private void initAddTeamButton() {
         Button btnAddTeam = findViewById(R.id.btnAddTeam);
         btnAddTeam.setOnClickListener(new View.OnClickListener() {
@@ -207,7 +178,7 @@ public class TeamListActivity extends AppCompatActivity {
         teamList.setLayoutManager(layoutManager);
         teamAdapter = new TeamsAdapter(teams, this);
         teamAdapter.setOnItemClickListener(onClickListener);
-        teamAdapter.setOnItemCheckedChangeListener(onCheckedChangedListener);
+        //teamAdapter.setOnItemCheckedChangeListener(onCheckedChangedListener);
         teamList.setAdapter(teamAdapter);
     }
 }

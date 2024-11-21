@@ -59,7 +59,6 @@ public class Team implements Serializable {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -67,7 +66,6 @@ public class Team implements Serializable {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -75,7 +73,6 @@ public class Team implements Serializable {
     public String getCity() {
         return city;
     }
-
     public void setCity(String city) {
         this.city = city;
     }
@@ -83,7 +80,6 @@ public class Team implements Serializable {
     public String getCellPhone() {
         return cellPhone;
     }
-
     public void setCellPhone(String cellPhone) {
         this.cellPhone = cellPhone;
     }
@@ -91,7 +87,6 @@ public class Team implements Serializable {
     public float getRating() {
         return rating;
     }
-
     public void setRating(float rating) {
         this.rating = rating;
     }
@@ -99,7 +94,6 @@ public class Team implements Serializable {
     public int getImgId() {
         return imgId;
     }
-
     public void setImgId(int imgId) {
         this.imgId = imgId;
     }
@@ -107,7 +101,6 @@ public class Team implements Serializable {
     public boolean getIsFavorite() {
         return isFavorite;
     }
-
     public void setIsFavorite(boolean favorite) {
         isFavorite = favorite;
     }
@@ -115,7 +108,6 @@ public class Team implements Serializable {
     public Double getLatitude() {
         return latitude;
     }
-
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
@@ -123,17 +115,13 @@ public class Team implements Serializable {
     public Double getLongitude() {
         return longitude;
     }
-
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
+
     public void setControlText(int controlId, String value){
-        if(controlId == R.id.etName){
-            this.setName(value);
-        }else if (controlId == R.id.etCity) {
-            this.setCity(value);
-        }else{
-            this.setCellPhone(value);
-        }
+        if(controlId == R.id.etName){ this.setName(value); }
+        else if (controlId == R.id.etCity) { this.setCity(value); }
+        else{ this.setCellPhone(value); }
     }
 }
