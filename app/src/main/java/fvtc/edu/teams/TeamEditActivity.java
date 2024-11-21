@@ -166,7 +166,6 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
     }
 
     private void initSaveButton()  {
-        String APIURL = getString(R.string.API_URl) + teamId;
         Button btnSave = findViewById(R.id.btnSave);
         Log.d(TAG, "initSaveButton: hit");
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -185,8 +184,7 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
                             });
                     team.setImgId(R.drawable.photoicon);
                 } else {
-                    Log.d(TAG, "onClick api url: " + APIURL);
-                    RestClient.execPutRequest(team, APIURL, TeamEditActivity.this, new VolleyCallback() {
+                    RestClient.execPutRequest(team, getString(R.string.API_URl) + teamId, TeamEditActivity.this, new VolleyCallback() {
                         @Override
                         public void onSuccess(ArrayList<Team> result) {
 

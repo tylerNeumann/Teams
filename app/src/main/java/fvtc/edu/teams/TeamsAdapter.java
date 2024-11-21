@@ -121,14 +121,19 @@ public class TeamsAdapter extends RecyclerView.Adapter{
         try {
             Log.d(TAG, "deleteItem: start");
             Team team = teamData.get(position);
-            TeamsDataSource ds = new TeamsDataSource(parentContext);
-            ds.open();
             Log.i(TAG, "deleteItem: " + team.getName());
-            boolean didDelete = ds.delete(team) > 0;
+
+            RestClient.execDeleteRequest(team, parentContext.getString(R.string.API_URl) + team.getId(), this.parentContext,
+                    new VolleyCallback() {
+                        @Override
+                        public void onSuccess(ArrayList<Team> result) {
+                            teamData.remove(team);
+                            notifyDataSetChanged();
+                            Log.i(TAG, "onSuccess: delete" + team.getName());
+                        }
+                    });
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        teamData.remove(position);
-        notifyDataSetChanged();
     }
 }
