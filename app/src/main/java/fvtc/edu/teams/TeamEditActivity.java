@@ -68,8 +68,8 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
         initTextChanged(R.id.etName);
         initTextChanged(R.id.etCity);
         initTextChanged(R.id.editCell);
-        /*initCallFunction();
-        initImgBtn();*/
+        initCallFunction();
+        initImgBtn();
 
 
         Log.i(TAG, "onCreate: " + teamId);
@@ -78,9 +78,9 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-        });
+        });*/
     }
-    /*private void initCallFunction() {
+    private void initCallFunction() {
         EditText editCell = findViewById(R.id.editCell);
         editCell.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -184,7 +184,7 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
                 imageButton.setImageBitmap(scaledPhoto);
             }
         }
-    }*/
+    }
     @Override
     public void didFinishTeamRaterDialog(float rating){
         Log.d(TAG, "didFinishTeamRaterDialog: " + rating);
@@ -316,16 +316,6 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
                     });
                 }
                 startActivity(new Intent(TeamEditActivity.this, TeamListActivity.class));
-            }
-        });
-    }
-    private void initCallFunction() {
-        EditText editCell = findViewById(R.id.editCell);
-        editCell.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                //checkPhonePermission(team.getCellPhone());
-                return false;
             }
         });
     }
