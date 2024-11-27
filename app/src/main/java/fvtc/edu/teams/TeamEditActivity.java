@@ -164,7 +164,6 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
             scrollView.fullScroll(ScrollView.FOCUS_UP);
         }
     }
-
     private void initSaveButton()  {
         Button btnSave = findViewById(R.id.btnSave);
         Log.d(TAG, "initSaveButton: hit");
@@ -193,6 +192,16 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
                     });
                 }
                 startActivity(new Intent(TeamEditActivity.this, TeamListActivity.class));
+            }
+        });
+    }
+    private void initCallFunction() {
+        EditText editCell = findViewById(R.id.editCell);
+        editCell.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                //checkPhonePermission(team.getCellPhone());
+                return false;
             }
         });
     }
