@@ -66,7 +66,7 @@ public class TeamsDataSource {
                 team.setId(cursor.getInt(0));
                 team.setName(cursor.getString(1));
                 team.setCity(cursor.getString(2));
-                team.setImgId(cursor.getInt(3));
+                //team.setImgId(cursor.getInt(3));
                 Boolean fav = (cursor.getInt(4) == 1);
                 team.setIsFavorite(fav);
                 team.setRating(cursor.getFloat(5));
@@ -106,14 +106,14 @@ public class TeamsDataSource {
                 team.setId(cursor.getInt(0));
                 team.setName(cursor.getString(1));
                 team.setCity(cursor.getString(2));
-                team.setImgId(cursor.getInt(3));
+               // team.setImgId(cursor.getInt(3));
                 Boolean fav = (cursor.getInt(4) == 1);
                 team.setIsFavorite(fav);
                 team.setRating(cursor.getFloat(5));
                 team.setCellPhone(cursor.getString(6));
                 team.setLatitude(cursor.getDouble(7));
                 team.setLongitude(cursor.getDouble(8));
-                if(team.getImgId() == 0) team.setImgId(R.drawable.photoicon);
+               // if(team.getImgId() == 0) team.setImgId(R.drawable.photoicon);
 
                 teams.add(team);
                 Log.d(TAG, "get: " + team.toString());
@@ -193,7 +193,7 @@ public class TeamsDataSource {
                 ContentValues values = new ContentValues();
                 values.put("name", team.getName());
                 values.put("city", team.getCity());
-                values.put("imgId", team.getImgId());
+               // values.put("imgId", team.getImgId());
                 values.put("isFavorite", team.getIsFavorite());
                 values.put("rating", team.getRating());
                 values.put("phone", team.getCellPhone());
@@ -222,7 +222,7 @@ public class TeamsDataSource {
             ContentValues values = new ContentValues();
             values.put("name", team.getName());
             values.put("city", team.getCity());
-            values.put("imgId", team.getImgId());
+            //values.put("imgId", team.getImgId());
             values.put("isFavorite", team.getIsFavorite());
             values.put("rating", team.getRating());
             values.put("phone", team.getCellPhone());

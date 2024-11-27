@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/activity_team_edit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TeamEditActivity">
@@ -159,6 +159,16 @@
                 </Button>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ImageButton
+                android:id="@+id/imgTeam"
+                android:layout_width="@dimen/_150dp"
+                android:layout_height="@dimen/_150dp"
+                android:layout_marginEnd="@dimen/_16dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/photoicon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

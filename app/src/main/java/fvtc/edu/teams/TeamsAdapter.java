@@ -1,6 +1,7 @@
 package fvtc.edu.teams;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ public class TeamsAdapter extends RecyclerView.Adapter{
     private CompoundButton.OnCheckedChangeListener onItemCheckedChangeListener;
     private  boolean isDeleteing;
     public static final String TAG = "TeamAdapter";
+    Team team;
 
     private Context parentContext;
 
@@ -78,11 +80,11 @@ public class TeamsAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: " + teamData.get(position));
-
+        team = teamData.get(position);
         TeamViewHolder teamViewHolder = (TeamViewHolder) holder;
         teamViewHolder.getTvName().setText(teamData.get(position).getName());
         teamViewHolder.getTvCity().setText(teamData.get(position).getCity());
-        teamViewHolder.getImageButtonPhoto().setImageResource(teamData.get(position).getImgId());
+       // teamViewHolder.getImageButtonPhoto().setImageResource(teamData.get(position).getImgId());
         teamViewHolder.getChkFavorite().setChecked(teamData.get(position).getIsFavorite());
         if(isDeleteing) teamViewHolder.btnDelete.setVisibility(View.VISIBLE);
         else teamViewHolder.btnDelete.setVisibility(View.INVISIBLE);
@@ -95,21 +97,21 @@ public class TeamsAdapter extends RecyclerView.Adapter{
                 deleteItem(position);
             }
         });
-        /*Bitmap teamPhoto = team.getPicture();
+        Bitmap teamPhoto = team.getPhoto();
         if(teamPhoto != null){
             teamViewHolder.getImageButtonPhoto().setImageBitmap(teamPhoto);
         }
         else {
             teamViewHolder.getImageButtonPhoto().setImageResource(R.drawable.photoicon);
-        }*/
+        }
 
-        /*teamViewHolder.getBtnDelete().setOnClickListener(new View.OnClickListener() {
+        teamViewHolder.getBtnDelete().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: delete");
                 deleteItem(position);
             }
-        });*/
+        });
     }
 
     @Override
@@ -120,7 +122,7 @@ public class TeamsAdapter extends RecyclerView.Adapter{
     private void deleteItem(int position){
         try {
             Log.d(TAG, "deleteItem: start");
-            Team team = teamData.get(position);
+            team = teamData.get(position);
             Log.i(TAG, "deleteItem: " + team.getName());
 
             RestClient.execDeleteRequest(team, parentContext.getString(R.string.API_URl) + team.getId(), this.parentContext,

@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -52,13 +53,12 @@ public class RestClient {
                                 team.setLongitude(object.getDouble("longitude"));
 
                                 /*String jsonPhoto = object.getString("photo");
-
                                 if(jsonPhoto != null)
                                 {
                                     byte[] bytePhoto = null;
                                     bytePhoto = Base64.decode(jsonPhoto, Base64.DEFAULT);
                                     Bitmap bmp = BitmapFactory.decodeByteArray(bytePhoto, 0, bytePhoto.length);
-                                    //team.setImgId(bmp);
+                                    team.setPhoto(bmp);
                                 }*/
 
                                 teams.add(team);
@@ -117,6 +117,15 @@ public class RestClient {
                                     team.setIsFavorite(object.getBoolean("isFavorite"));
                                     team.setLatitude(object.getDouble("latitude"));
                                     team.setLongitude(object.getDouble("longitude"));
+
+                                   /* String jsonPhoto = object.getString("photo");
+                                    if(jsonPhoto != null)
+                                    {
+                                        byte[] bytePhoto = null;
+                                        bytePhoto = Base64.decode(jsonPhoto, Base64.DEFAULT);
+                                        Bitmap bmp = BitmapFactory.decodeByteArray(bytePhoto, 0, bytePhoto.length);
+                                        team.setPhoto(bmp);
+                                    }*/
 
                                     teams.add(team);
                                 }
