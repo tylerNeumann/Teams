@@ -182,6 +182,7 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
                 Bitmap scaledPhoto = Bitmap.createScaledBitmap(photo,144,144,true);
                 ImageButton imageButton = findViewById(R.id.imgTeam);
                 imageButton.setImageBitmap(scaledPhoto);
+                team.setPhoto(scaledPhoto);
             }
         }
     }

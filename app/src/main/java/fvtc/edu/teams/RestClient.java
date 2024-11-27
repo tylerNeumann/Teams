@@ -52,14 +52,14 @@ public class RestClient {
                                 team.setLatitude(object.getDouble("latitude"));
                                 team.setLongitude(object.getDouble("longitude"));
 
-                                /*String jsonPhoto = object.getString("photo");
+                                String jsonPhoto = object.getString("photo");
                                 if(jsonPhoto != null)
                                 {
                                     byte[] bytePhoto = null;
                                     bytePhoto = Base64.decode(jsonPhoto, Base64.DEFAULT);
                                     Bitmap bmp = BitmapFactory.decodeByteArray(bytePhoto, 0, bytePhoto.length);
                                     team.setPhoto(bmp);
-                                }*/
+                                }
 
                                 teams.add(team);
 
@@ -118,14 +118,14 @@ public class RestClient {
                                     team.setLatitude(object.getDouble("latitude"));
                                     team.setLongitude(object.getDouble("longitude"));
 
-                                   /* String jsonPhoto = object.getString("photo");
+                                    String jsonPhoto = object.getString("photo");
                                     if(jsonPhoto != null)
                                     {
                                         byte[] bytePhoto = null;
                                         bytePhoto = Base64.decode(jsonPhoto, Base64.DEFAULT);
                                         Bitmap bmp = BitmapFactory.decodeByteArray(bytePhoto, 0, bytePhoto.length);
                                         team.setPhoto(bmp);
-                                    }*/
+                                    }
 
                                     teams.add(team);
                                 }
@@ -170,7 +170,7 @@ public class RestClient {
             object.put("latitude", team.getLatitude());
             object.put("longitude", team.getLongitude());
 
-            /*if(team.getPhoto() != null)
+            if(team.getPhoto() != null)
             {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 Bitmap bitmap = Bitmap.createScaledBitmap(team.getPhoto(), 144, 144, false);
@@ -182,7 +182,7 @@ public class RestClient {
             else
             {
                 object.put("photo", null);
-            }*/
+            }
             final String requestBody = object.toString();
             Log.d(TAG, "executeRequest: " + requestBody);
 
