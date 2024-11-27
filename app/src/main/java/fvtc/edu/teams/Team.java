@@ -1,5 +1,7 @@
 package fvtc.edu.teams;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class Team implements Serializable {
@@ -10,11 +12,11 @@ public class Team implements Serializable {
     private String city;
     private String cellPhone;
     private float rating;
-    private int imgId;
+    //private int imgId;
     private boolean isFavorite;
     private Double latitude;
     private Double longitude;
-
+    private Bitmap photo;
     @Override
     public String toString() {
         return  String.valueOf(id) +
@@ -22,7 +24,7 @@ public class Team implements Serializable {
                 "|" + city + '\'' +
                 "|'" + cellPhone + '\'' +
                 "|" + rating +
-                "|" + imgId +
+                //"|" + imgId +
                 "|" + isFavorite +
                 "|" + latitude +
                 "|" + longitude;
@@ -32,7 +34,7 @@ public class Team implements Serializable {
         this.city = "";
         this.cellPhone = "";
         this.rating = 0.0f;
-        this.imgId = R.drawable.photoicon;
+        //this.imgId = R.drawable.photoicon;
         this.isFavorite = false;
         this.latitude = 0.0;
         this.longitude = 0.0;
@@ -51,7 +53,7 @@ public class Team implements Serializable {
         this.city = city;
         this.cellPhone = cellPhone;
         this.rating = rating;
-        this.imgId = imgId;
+       // this.imgId = imgId;
         this.isFavorite = isFavorite;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -91,12 +93,12 @@ public class Team implements Serializable {
         this.rating = rating;
     }
 
-    public int getImgId() {
+    /*public int getImgId() {
         return imgId;
     }
     public void setImgId(int imgId) {
         this.imgId = imgId;
-    }
+    }*/
 
     public boolean getIsFavorite() {
         return isFavorite;
@@ -124,4 +126,7 @@ public class Team implements Serializable {
         else if (controlId == R.id.etCity) { this.setCity(value); }
         else{ this.setCellPhone(value); }
     }
+
+    public Bitmap getPhoto() { return photo; }
+    public void setPhoto(Bitmap photo) { this.photo = photo; }
 }
