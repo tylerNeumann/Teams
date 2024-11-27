@@ -150,20 +150,20 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
                             }).show();
                         }
                         else {
-                            Log.d(TAG, "onClick: ");
+                            Log.d(TAG, "onClick: 1st else");
                             ActivityCompat.requestPermissions(TeamEditActivity.this,
                                     new String[] {android.Manifest.permission.CAMERA},PERMISSION_REQUEST_PHONE);
                             takePhoto();
                         }
                     }
                     else{
-                        Log.d(TAG, "onClick: ");
+                        Log.d(TAG, "onClick: 2nd else");
                         takePhoto();
                     }
                 }
                 else{
                     // Only rely on the previous permissions
-                    Log.d(TAG, "onClick: ");
+                    Log.d(TAG, "onClick: 3rd else");
                     takePhoto();
                 }
             }
