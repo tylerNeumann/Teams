@@ -28,4 +28,20 @@
     <string name="sort_by">Sort by</string>
 
     <string name="API_URl">https://fvtcdp.azurewebsites.net/api/Team/</string>
+    <string name="normal">normal</string>
+    <string name="satellite">satellite</string>
+    <string name="wnw">wnw</string>
+    <string name="address">Address:</string>
+    <string name="_625_weatherstone_dr">625 Weatherstone Dr.</string>
+    <string name="enter_street_address">Enter Street Address</string>
+    <string name="oshkosh">Oshkosh</string>
+    <string name="wi">WI</string>
+    <string name="state">State</string>
+    <string name="_54901">54901</string>
+    <string name="zipcode">Zipcode</string>
+    <string name="get_coordinates">Get Coordinates</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="accuracy">Accuracy:</string>
+    <string name="none">None</string>
 </resources>

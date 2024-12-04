@@ -4,6 +4,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,14 +13,18 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -28,11 +33,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.gms.location.FusedLocationProviderClient;
 
 import java.util.ArrayList;
 
-public class TeamEditActivity extends AppCompatActivity implements RaterDialog.SaveRatingListener{
+public class TeamEditActivity extends AppCompatActivity implements RaterDialog.SaveRatingListener, OnMapReadyCallback {
     public static final String TAG = TeamEditActivity.class.toString();
     Team team;
     boolean loading = true;
@@ -41,6 +55,8 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
     public static final int PERMISSION_REQUEST_PHONE = 102;
     public static final int PERMISSION_REQUEST_CAMERA = 103;
     public static final int CAMERA_REQUEST = 1888;
+    GoogleMap gMap;
+   FusedLocationProviderClient fusedLocationProviderClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +86,7 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
         initTextChanged(R.id.editCell);
         initCallFunction();
         initImgBtn();
+        initMapTypeButtons();
 
 
         Log.i(TAG, "onCreate: " + teamId);
@@ -80,6 +97,19 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
             return insets;
         });
     }
+
+    private void initMapTypeButtons() {
+        RadioGroup rgMapType = findViewById(R.id.radioGroupMapType);
+        rgMapType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rbNormal = findViewById(R.id.radioButtonNormal);
+                if(rbNormal.isChecked()) gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                else gMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+            }
+        });
+    }
+
     private void initCallFunction() {
         EditText editCell = findViewById(R.id.editCell);
         editCell.setOnLongClickListener(new View.OnLongClickListener() {
@@ -229,6 +259,9 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
             editRating.setText(String.valueOf(team.getRating()));
             ImageButton imageTeam = findViewById(R.id.imgTeam);
             if(team.getPhoto() != null) imageTeam.setImageBitmap(team.getPhoto());
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
         }
 
     }
@@ -319,5 +352,38 @@ public class TeamEditActivity extends AppCompatActivity implements RaterDialog.S
                 startActivity(new Intent(TeamEditActivity.this, TeamListActivity.class));
             }
         });
+    }
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        try {
+            Log.d(TAG, "onMapReady: begin");
+            gMap = googleMap;
+            gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+            Point point = new Point();
+            WindowManager windowManager = getWindowManager();
+            windowManager.getDefaultDisplay().getSize(point);
+
+            if(team != null){
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                String info = team.getName() + ", " + team.getCity() + ", " + team.getRating();
+
+                LatLng marker = new LatLng(team.getLatitude(), team.getLongitude());
+                builder.include(marker);
+
+                gMap.addMarker(new MarkerOptions()
+                        .position(marker)
+                        .title(team.getName())
+                        .snippet(team.getCity()));
+
+                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker,13f));
+            }
+            else{
+                Log.d(TAG, "onMapReady: no team");
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
