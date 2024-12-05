@@ -8,7 +8,7 @@
     tools:context=".TeamMapActivity">
 
     <TextView
-        android:id="@+id/textAddress"
+        android:id="@+id/txtAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editAddress"
+        android:id="@+id/etAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16dp"
@@ -28,11 +28,11 @@
         android:inputType="textCapWords"
         android:hint="@string/enter_street_address"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAddress"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddress"
         android:imeOptions="actionNext"/>
 
     <EditText
-        android:id="@+id/editCity"
+        android:id="@+id/etCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16dp"
@@ -42,12 +42,12 @@
         android:hint="@string/city"
         android:imeOptions="actionNext"
         android:inputType="textCapWords"
-        android:nextFocusDown="@id/editState"
+        android:nextFocusDown="@+id/etState"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/etAddress" />
 
     <EditText
-        android:id="@+id/editState"
+        android:id="@+id/etState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_2dp"
@@ -57,12 +57,12 @@
         android:hint="@string/state"
         android:inputType="textCapCharacters"
         android:maxLength="2"
-        android:nextFocusDown="@id/editZipcode"
-        app:layout_constraintStart_toEndOf="@+id/editCity"
-        app:layout_constraintTop_toBottomOf="@+id/editAddress" />
+        android:nextFocusDown="@+id/etZipcode"
+        app:layout_constraintStart_toEndOf="@+id/etCity"
+        app:layout_constraintTop_toBottomOf="@+id/etAddress" />
 
     <EditText
-        android:id="@+id/editZipcode"
+        android:id="@+id/etZipcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_2dp"
@@ -72,73 +72,75 @@
         android:hint="@string/zipcode"
         android:inputType="number"
         android:maxLength="5"
-        app:layout_constraintStart_toEndOf="@+id/editState"
-        app:layout_constraintTop_toBottomOf="@+id/editAddress" />
+        app:layout_constraintStart_toEndOf="@+id/etState"
+        app:layout_constraintTop_toBottomOf="@+id/etAddress" />
 
     <Button
-        android:id="@+id/buttonGetLocation"
+        android:id="@+id/btnGetLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16dp"
         android:layout_marginTop="@dimen/_24dp"
         android:text="@string/get_coordinates"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editCity" />
+        app:layout_constraintTop_toBottomOf="@+id/etCity" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16dp"
         android:layout_marginTop="@dimen/_32dp"
         android:text="@string/latitude"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGetLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/btnGetLocation" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txtView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16dp"
         android:layout_marginTop="@dimen/_8dp"
         android:text="@string/longitude"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/txtView3" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/txtView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16dp"
         android:layout_marginTop="@dimen/_8dp"
         android:text="@string/accuracy"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/txtView4" />
 
     <TextView
-        android:id="@+id/textLatitude"
+        android:id="@+id/txtLatitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_32dp"
+        android:textSize="@dimen/_24dp"
         android:text="@string/none"
-        app:layout_constraintBaseline_toBaselineOf="@id/textView3"
-        app:layout_constraintStart_toEndOf="@+id/textView3" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtView3"
+        app:layout_constraintStart_toEndOf="@+id/txtView3" />
 
     <TextView
-        android:id="@+id/textLongitude"
+        android:id="@+id/txtLongitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_24dp"
+        android:text="@string/none"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtView4"
+        app:layout_constraintStart_toStartOf="@+id/txtLatitude" />
+
+    <TextView
+        android:id="@+id/txtAccuracy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/none"
-        app:layout_constraintBaseline_toBaselineOf="@id/textView4"
-        app:layout_constraintStart_toStartOf="@+id/textLatitude" />
-
-    <TextView
-        android:id="@+id/textAccuracy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/none"
-        app:layout_constraintBaseline_toBaselineOf="@id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/textLongitude" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtView5"
+        app:layout_constraintStart_toStartOf="@+id/txtLongitude" />
 
     <include
         android:id="@+id/include2"
@@ -147,11 +149,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textHeading"
+        android:id="@+id/txtHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/wnw"
-        app:layout_constraintStart_toEndOf="@+id/buttonGetLocation"
+        app:layout_constraintStart_toEndOf="@+id/btnGetLocation"
         tools:layout_editor_absoluteY="178dp" />
 
     <include layout="@layout/navbar"/>
